@@ -1,11 +1,19 @@
 <script setup lang="ts">
-import { create, edit, destroy } from "@/actions/App/Http/Controllers/TaskController";
+import { index, create, edit, filtrHotove, filtrNehotove, destroy } from "@/actions/App/Http/Controllers/TaskController";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion'
+} from '@/components/ui/accordion';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Link } from '@inertiajs/vue3';
 
 defineProps({ ukoly: Object })
@@ -13,9 +21,20 @@ defineProps({ ukoly: Object })
 
 <template>
   <h1 class="text-3xl mb-5">Seznam úkolů</h1>
-  <Link :href="create()" class="rounded bg-blue-700 text-white px-2 py-1"><button>Přidat úkol</button></Link>
+  <div class="flex items-center gap-3">
+    <Link :href="create()" class="rounded bg-blue-700 text-white px-2 py-1"><button>Přidat úkol</button></Link>
+    <DropdownMenu>
+      <DropdownMenuTrigger>Filtrování dle statusu</DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem><Link :href="index()">Všechny úkoly</Link></DropdownMenuItem>
+        <DropdownMenuItem><Link :href="filtrHotove()">Hotové úkoly</Link></DropdownMenuItem>
+        <DropdownMenuItem><Link :href="filtrNehotove()">Čekající úkoly</Link></DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </div>
+
   <Accordion type="single" collapsible class="w-full" default-value="item-1">
-    <AccordionItem :value="index" v-for="(ukol, index) in ukoly" :key="index">
+    <AccordionItem :value="index" v-for="(ukol, index) in ukoly" :key="ukol.id">
 
       <AccordionTrigger class="py-5">{{ ukol.nazev }}</AccordionTrigger>
       <AccordionContent>

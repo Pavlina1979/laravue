@@ -82,23 +82,23 @@ class TaskController extends Controller
     return redirect()->route('tasks.index')->with('success', "Úkol '{$jmenoUkolu}' byl úspěšně smazán");
   }
 
-  // public function filtrHotove()
-  // {
-  //   $ukoly = Task::query()->where('dokonceno', true)->paginate(3);
+  public function filtrHotove()
+  {
+    $ukoly = Task::query()->where('dokonceno', true)->get();
 
-  //   return view('ukol.index', [
-  //     'ukoly' => $ukoly
-  //   ]);
-  // }
+    return Inertia::render('ukol/Index', [
+      'ukoly' => $ukoly
+    ]);
+  }
 
-  // public function filtrNehotove()
-  // {
-  //   $ukoly = Task::query()->where('dokonceno', false)->paginate(3);
+  public function filtrNehotove()
+  {
+    $ukoly = Task::query()->where('dokonceno', false)->get();
 
-  //   return view('ukol.index', [
-  //     'ukoly' => $ukoly
-  //   ]);
-  // }
+    return Inertia::render('ukol/Index', [
+      'ukoly' => $ukoly
+    ]);
+  }
 
   private function validate(Request $request)
   {
