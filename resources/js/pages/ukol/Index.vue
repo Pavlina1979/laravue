@@ -15,8 +15,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Link } from '@inertiajs/vue3';
+import { useDateFormat } from "@vueuse/core";
 
-defineProps({ ukoly: Object })
+defineProps({ ukoly: Object });
 </script>
 
 <template>
@@ -26,9 +27,15 @@ defineProps({ ukoly: Object })
     <DropdownMenu>
       <DropdownMenuTrigger>Filtrování dle statusu</DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem><Link :href="index()">Všechny úkoly</Link></DropdownMenuItem>
-        <DropdownMenuItem><Link :href="filtrHotove()">Hotové úkoly</Link></DropdownMenuItem>
-        <DropdownMenuItem><Link :href="filtrNehotove()">Čekající úkoly</Link></DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link :href="index()">Všechny úkoly</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link :href="filtrHotove()">Hotové úkoly</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link :href="filtrNehotove()">Čekající úkoly</Link>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   </div>
@@ -43,7 +50,7 @@ defineProps({ ukoly: Object })
         </p>
         <p class="mt-5 flex space-x-4 items-center">
         <div v-if="ukol.dokonceno !== 1">
-          Hotovo do: {{ ukol.dokdy }}
+          Hotovo do: {{ useDateFormat(ukol.dokdy, 'DD. MM. YYYY') }}
         </div>
         <div v-else>
           hotovo
