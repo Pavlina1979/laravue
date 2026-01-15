@@ -21,7 +21,7 @@ class TaskController extends Controller
   public function index()
   {
     //$ukoly = Task::latest()->paginate(3);
-    $ukoly = Task::latest()->get();
+    $ukoly = Task::latest()->get(['id', 'nazev', 'popis', 'dokdy', 'dokonceno']);
 
     return Inertia::render('ukol/Index', [
       'ukoly' => $ukoly
