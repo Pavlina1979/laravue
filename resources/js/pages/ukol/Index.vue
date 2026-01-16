@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import TaskController from "@/actions/App/Http/Controllers/TaskController";
+import AuthController from "@/actions/App/Http/Controllers/AuthController";
+
 import {
     Accordion,
     AccordionContent,
@@ -14,13 +16,20 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Link } from '@inertiajs/vue3';
 import { useDateFormat } from "@vueuse/core";
-import { Badge } from '@/components/ui/badge'
+import { Badge } from '@/components/ui/badge';
 
 defineProps({ ukoly: Object });
 </script>
 
 <template>
-    <h1 class="text-3xl mb-5">Seznam úkolů</h1>
+    <div class="flex justify-between items-center">
+        <h1 class="text-3xl mb-5">Seznam úkolů pro {{ $page.props.auth.user.name }}</h1>
+        <Link :href="AuthController.logout()" method="post">Odhlásit</Link>
+    </div>
+    <div v-if="$page.props.flash.success"
+        class="mb-8 border border-green-300 bg-green-200 p-2 border-l-8 border-l-green-500">
+        {{ $page.props.flash.success }}
+    </div>
     <div class="flex items-center gap-3">
         <Link :href="TaskController.create()" class="rounded bg-blue-700 text-white px-2 py-1">Přidat úkol</Link>
         <DropdownMenu>
@@ -82,5 +91,7 @@ defineProps({ ukoly: Object });
 
 
     </Accordion>
+
+    <p class="mt-8" v-if="ukoly.length === 0">Zatím nemáte naplánované žádné úkoly</p>
 
 </template>
