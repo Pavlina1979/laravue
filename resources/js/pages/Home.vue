@@ -9,7 +9,7 @@ import AuthController from "@/actions/App/Http/Controllers/AuthController";
         <ul class="flex gap-4 items-center">
             <template v-if="$page.props.auth.user === null">
                 <li>
-                    <Link :href="AuthController.loginForm()">Přihlásit</Link>
+                    <Link :href="AuthController.login()">Přihlásit</Link>
                 </li>
                 <li>
                     <Link :href="AuthController.create()">Registrovat</Link>

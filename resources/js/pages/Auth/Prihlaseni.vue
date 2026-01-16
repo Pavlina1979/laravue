@@ -16,7 +16,7 @@ const form = useForm({
         </Link>
     </p>
 
-    <form @submit.prevent="form.submit(AuthController.login())" method="POST">
+    <form @submit.prevent="form.submit(AuthController.prihlaseni())" method="POST">
         <div class="mb-6">
             <label class="block mb-2" for="email">Email</label>
             <input class="border border-gray-400 block" type="text" id="email" name="email" placeholder="Email"
